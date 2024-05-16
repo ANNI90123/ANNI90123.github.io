@@ -1,6 +1,10 @@
-data = FileAttachment("population-by-age.csv").csv({typed: true});
-// source for data: https://observablehq.com/@d3/donut-chart/2?intent=fork
+d3.csv("population-by-age.csv", function(data) {
+        console.log(data);
+        //format data if required...
+        //draw chart
+  
 
+const width = 500;
 const height = Math.min(width, 500);
 const radius = Math.min(width, height) / 2;
 
@@ -24,9 +28,10 @@ const svg = d3.select("svg")
     .attr("style", "max-width: 100%; height: auto;");
 
 svg.append("g")
-    .selectAll()
+    .selectAll("path")
     .data(pie(data))
-    .join("path")
+    .enter()
+    .append("path")
     .attr("fill", d => color(d.data.name))
     .attr("d", arc)
     .append("title")
@@ -36,9 +41,10 @@ svg.append("g")
     .attr("font-family", "sans-serif")
     .attr("font-size", 12)
     .attr("text-anchor", "middle")
-    .selectAll()
+    .selectAll("text")
     .data(pie(data))
-    .join("text")
+    .enter()
+    .append("text")
     .attr("transform", d => `translate(${arc.centroid(d)})`)
     .call(text => text.append("tspan")
         .attr("y", "-0.4em")
@@ -49,3 +55,4 @@ svg.append("g")
         .attr("y", "0.7em")
         .attr("fill-opacity", 0.7)
         .text(d => d.data.value.toLocaleString("en-US")));
+    });
