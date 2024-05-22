@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
-    <script src="https://d3js.org/d3.v4.js"></script>
-    
     <head>
         <title>Search Engine Observatory</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
+
+        <script>
+
+
+            
+        </script>
     </head>
-    
-
-
-
     <body>
         <div class="header"> 
             Search Engine Observatory
@@ -25,17 +25,18 @@
             <a href="ddg.html">DuckDuckGo</a>
             <a href="research.html">The Research</a>
         </div>
-        <h3>
-            DuckDuckGo
-        </h3>
 
         <div class="div1">
-            <svg id="chart1"></svg>
+            {{ content }}
         </div>
-        
-        <script src="chart1.js"></script>
-        
 
-        
+        <div class="footer">
+            <div class="divLeft">
+                Bauhaus-Universität Weimar 
+            </div>
+            <div class="divRight">
+                someone@uni-weimar.de
+            </div>
+        </div>
     </body>
 </html>

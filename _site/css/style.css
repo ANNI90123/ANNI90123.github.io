@@ -1,0 +1,65 @@
+body {
+    background-color: rgb(255, 255, 255);
+    /*margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 50px;*/
+    font-family: Andale Mono, monospace;
+  }
+  .header {
+    background-color: rgb(85, 83, 75);
+    padding: 30px;
+    text-align: center;
+    font-size: 35px;
+    color: white;
+  }
+  /* Style the top navigation bar */
+  .topnav {
+    overflow: hidden;
+    background-color: #333;
+  }
+
+  /* Style the topnav links */
+  .topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    /*padding: 14px 30px;*/
+    text-decoration: none;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    width: 16.66%;
+  }
+
+  /* Change color on hover */
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+
+  h3 {
+    color: rgb(22, 46, 23);
+    text-align: center;
+  }
+  p {
+    font-size: 15px;
+    color: rgb(0, 0, 0);
+    text-align: center;
+  }
+
+  .div1 {
+    display: flex;
+    justify-content: center;
+  }
+
+
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(85, 83, 75);
+    color: black;
+    text-align: center;
+  }
