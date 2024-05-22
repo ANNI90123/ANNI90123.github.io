@@ -48,7 +48,7 @@ svg.append('g')
 
 
 
-d3.csv("alphabet.csv", function(firstdata) {
+d3.csv("js/alphabet.csv", function(firstdata) {
     
     const data = firstdata.sort((a, b) => b.frequency - a.frequency);
     
