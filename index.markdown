@@ -5,3 +5,9 @@
 layout: default
 ---
 # Hello
+
+
+<svg id="chart0"></svg> 
+<script>
+    dotChart("js/test.csv", "#chart0", "h1Count");
+</script>

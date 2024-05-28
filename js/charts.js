@@ -204,3 +204,82 @@ function dountChart(dataPath, svgID){
     });
 
 }
+
+function dotChart(dataPath, svgID, attribute){
+
+    d3.csv(dataPath, function(data){
+
+            data.forEach(d => d.rank = +d.rank);
+            data.forEach(d => d[attribute] = +d[attribute]);
+
+            console.log(data);
+
+
+            const attributeSum = new Array(20).fill(0);
+            const attributeAverage = new Array(20).fill(0);
+            const count = new Array(20).fill(0);
+
+            let rank = 0;
+            data.forEach(function(d){
+                rank = d.rank -1;
+                attributeSum[rank] += d[attribute]
+                count[rank] ++;
+            });
+
+            for(let i = 0; i < 20; i++){
+                attributeAverage[i] = attributeSum[i] / count[i];
+            }
+
+            
+            console.log(count);
+            console.log(attributeSum);
+            console.log(attributeAverage);
+
+            const width = 928;
+            const height = 500;
+            const marginTop = 20;
+            const marginRight = 30;
+            const marginBottom = 30;
+            const marginLeft = 40;
+
+            const svg = d3.select(svgID)
+                .attr("width", width)
+                .attr("height", height)
+                .attr("viewBox", [0, 0, width, height])
+                //.attr("style", "max-width: 100%; height: auto; height: intrinsic;");
+
+            const x = d3.scaleLinear()
+                .domain([0, 20])
+                .range([marginLeft, width - marginRight]);
+            
+//TODO:
+// The domain of the y-axis is determined by the attribute that is examined in the chart
+            const y = d3.scaleLinear()
+                .domain([0.0, 20.0])
+                .range([height - marginBottom, marginTop]);
+
+            svg.append("g")
+                .attr("transform", `translate(0,${height - marginBottom})`)
+                .call(d3.axisBottom(x));
+
+
+            svg.append("g")
+                .attr("transform", `translate(${marginLeft},0)`)
+                .call(d3.axisLeft(y))
+
+
+            for(let i = 0; i < 20; i++){
+                svg.append("g")
+                    .attr("stroke", "#000")
+                    .attr("stroke-opacity", 0.2)
+                    .append("circle")
+                    .attr("cx", x(i+1))
+                    .attr("cy", y(attributeAverage[i]))
+                    .attr("r", 2.5);
+            }
+            
+        }
+    );
+
+}
+
