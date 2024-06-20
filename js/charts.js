@@ -3,7 +3,7 @@ function barChart (dataPath, svgID, x_data, y_data){
         
         const data = firstdata.sort((a, b) => b[y_data] - a[y_data]);
         
-        console.log(data);
+        //console.log(data);
 
         // Declare the chart dimensions and margins.
         const width = 928;
@@ -74,10 +74,7 @@ function lineChart(dataPath, svgID){
 
         aapl.forEach(d => d.date = new Date(d.date));
         aapl.forEach(d => d.close = +d.close);
-        console.log(aapl);
-        //console.log(d3.extent(aapl, d => d.date));
-        //console.log(d3.max(aapl, d => d.close));
-        //console.log(d3.max(aapl, d => d.date));
+        //console.log(aapl);
     
         // Declare the chart dimensions and margins.
         const width = 928;
@@ -148,7 +145,7 @@ function lineChart(dataPath, svgID){
 function dountChart(dataPath, svgID){
 
     d3.csv(dataPath, function(data) {
-        console.log(data);
+        //console.log(data);
 
         const width = 500;
         const height = Math.min(width, 500);
@@ -212,7 +209,7 @@ function dotChart(dataPath, svgID, attribute){
             data.forEach(d => d.rank = +d.rank);
             data.forEach(d => d[attribute] = +d[attribute]);
 
-            console.log(data);
+            //console.log(data);
 
 
             const attributeSum = new Array(20).fill(0);
@@ -230,42 +227,48 @@ function dotChart(dataPath, svgID, attribute){
                 attributeAverage[i] = attributeSum[i] / count[i];
             }
 
-            
-            console.log(count);
-            console.log(attributeSum);
-            console.log(attributeAverage);
+            const max = d3.max(data, d => d[attribute]);
+            const min = d3.min(data, d => d[attribute]);
 
-            const width = 928;
-            const height = 500;
+            const width = 800;
+            const height = 400;
             const marginTop = 20;
             const marginRight = 30;
             const marginBottom = 30;
             const marginLeft = 40;
 
             const svg = d3.select(svgID)
-                .attr("width", width)
-                .attr("height", height)
-                .attr("viewBox", [0, 0, width, height])
+                //.attr("width", width)
+                //.attr("height", height)
+                //.attr("viewBox", [0, 0, width, height])
                 //.attr("style", "max-width: 100%; height: auto; height: intrinsic;");
 
             const x = d3.scaleLinear()
                 .domain([0, 20])
                 .range([marginLeft, width - marginRight]);
             
-//TODO:
-// The domain of the y-axis is determined by the attribute that is examined in the chart
             const y = d3.scaleLinear()
-                .domain([0.0, 20.0])
+                .domain([min, max])
                 .range([height - marginBottom, marginTop]);
 
             svg.append("g")
                 .attr("transform", `translate(0,${height - marginBottom})`)
-                .call(d3.axisBottom(x));
+                .call(d3.axisBottom(x).ticks(20))
+                .call(g => g.append("text")
+                    .attr("fill", "currentColor")
+                    .attr("text-anchor", "end")
+                    .text("Rank"));
 
 
             svg.append("g")
                 .attr("transform", `translate(${marginLeft},0)`)
                 .call(d3.axisLeft(y))
+                .call(g => g.append("text")
+                    .attr("x", -marginLeft)
+                    .attr("y", 10)
+                    .attr("fill", "currentColor")
+                    .attr("text-anchor", "start")
+                    .text(attribute));
 
 
             for(let i = 0; i < 20; i++){
@@ -283,3 +286,148 @@ function dotChart(dataPath, svgID, attribute){
 
 }
 
+
+function plot(dataPath, svgID, attribute){
+
+    d3.csv(dataPath, function(data){
+
+        //prepare Data
+        data.forEach(d => d.rank = +d.rank);
+        data.forEach(d => d[attribute] = +d[attribute]);
+
+        const values_per_rank = Array.from({length: 20}, e => Array());
+        let rank = 0;
+        data.forEach(function(d){
+            rank = d.rank -1;
+            values_per_rank[rank].push(d[attribute]);
+        });
+        
+        // Decalre mesurements
+        var margin = {top: 30, right: 30, bottom: 30, left: 40};
+        var width = 800;
+        var height = 400;
+
+        // Select SVG
+        const svg = d3.select(svgID);
+
+
+        const min = d3.min(data, d => d[attribute]);
+        const max = d3.max(data, d => d[attribute]);
+
+        // decalre x- and y-axis
+        var x = d3.scaleLinear()
+            .domain([0,20])
+            .range([margin.left, width - margin.right]);
+        var y = d3.scaleLinear()
+            .domain([min,max])
+            .range([height - margin.bottom, margin.top]);
+        //show x- and y-axis
+        svg.append("g")
+            .attr("transform", `translate(0,${height - margin.bottom})`)
+            .call(d3.axisBottom(x).ticks(20));/*
+            .call(g => g.append("text")
+                .attr("text-anchor", "end")
+                .attr("x", width- margin.right)
+                .attr("y", height - 10)
+                .text("Rank"));*/
+        svg.append("g")
+            .attr("transform", `translate(${margin.left},0)`)
+            .call(d3.axisLeft(y))
+            .call(g => g.append("text")
+                .attr("x",-margin.left)
+                .attr("y", 10)
+                .attr("fill", "currentColor")
+                .attr("text-anchor", "start")
+                .text(attribute));
+
+        // add the boxes
+        var x_delta = (width - margin.left - margin.right)/20;
+        for(let i = 0; i < 20; i++){
+            console.log("Rank: " + (i+1));
+            box(values_per_rank[i], svgID, margin.left + x_delta*(i+1), y);
+        }
+
+    });
+
+}
+
+
+function box(dataArray, svgID, x, y_axis){
+    // declare mesurements for the box
+    var width = 15;
+
+    // sort dataArray
+    var data_sorted = dataArray.sort(d3.ascending);
+
+
+    console.log(data_sorted);
+    // Caluculate neede values for the box
+        var q1 = d3.quantile(data_sorted, .25);
+        var median = d3.quantile(data_sorted, .5);
+        var q3 = d3.quantile(data_sorted, .75);
+        var interQuantileRange = q3 - q1;
+        var min = q1 - 1.5 * interQuantileRange;
+        var max = q1 + 1.5 * interQuantileRange;
+        let min_index = 0;
+        var min_point = data_sorted[min_index];
+        while(min_point < min){
+            min_index++;
+            min_point = data_sorted[min_index];
+        }
+        let max_index = data_sorted.length-1;
+        var max_point = data_sorted[max_index];
+        while(max_point > max){
+            max_index--;
+            max_point=data_sorted[max_index];
+        }
+
+
+    console.log("min interval: " + min);
+    console.log("max interval: " + max);
+    console.log("Min: " + min_point);
+    console.log("Max: " + max_point);
+    
+
+    // Show the boxplot
+
+    // Select SVG
+    const svg = d3.select(svgID);
+
+    // Show the main vertical line
+    svg
+    .append("line")
+    .attr("x1", x)
+    .attr("x2", x)
+    .attr("y1", y_axis(min_point) )
+    .attr("y2", y_axis(max_point) )
+    .attr("stroke", "black");
+
+    // Show the box
+    svg
+    .append("rect")
+    .attr("x", x - width/2)
+    .attr("y", y_axis(q3) )
+    .attr("height", (y_axis(q1)-y_axis(q3)) )
+    .attr("width", width )
+    .attr("stroke", "black")
+    .style("fill", "#808080");
+
+    
+    // show median, min and max horizontal lines
+    svg
+    .selectAll("toto")
+    .data([min_point, median, max_point])
+    .enter()
+    .append("line")
+    .attr("x1", x-width/2)
+    .attr("x2", x+width/2)
+    .attr("y1", function(d){ return(y_axis(d))} )
+    .attr("y2", function(d){ return(y_axis(d))} )
+    .attr("stroke", "black");
+
+
+
+
+
+
+}
