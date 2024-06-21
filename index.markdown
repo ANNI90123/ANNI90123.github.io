@@ -9,7 +9,12 @@ layout: default
 
 <svg id="chart0" width="1000px" height="700px"></svg> 
 <svg id="chart1" width="1000px" height="700px"></svg> 
+
+<select id="selectButton"></select>
+<svg id="charti" width="1000px" height="700px"></svg> 
 <script>
-    dotChart("js/all_queries_domains_with_ranks_and_snapshots.csv", "#chart0", "h1 Word Count");
+    scatterPlot("js/all_queries_domains_with_ranks_and_snapshots.csv", "#chart0", "h1 Word Count");
     plot("js/all_queries_domains_with_ranks_and_snapshots.csv", "#chart1", "h1 Word Count");
+    filter();
+    update("js/all_queries_domains_with_ranks_and_snapshots.csv", 1)
 </script>

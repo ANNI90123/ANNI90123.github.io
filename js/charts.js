@@ -431,3 +431,76 @@ function box(dataArray, svgID, x, y_axis){
 
 
 }
+
+
+
+
+function scatterPlot(dataPath, svgID, attribute){
+
+    d3.csv(dataPath, function(data){
+
+            data.forEach(d => d.rank = +d.rank);
+            data.forEach(d => d[attribute] = +d[attribute]);
+
+            //console.log(data);
+
+            const max = d3.max(data, d => d[attribute]);
+            const min = d3.min(data, d => d[attribute]);
+
+            const width = 800;
+            const height = 400;
+            const marginTop = 20;
+            const marginRight = 30;
+            const marginBottom = 30;
+            const marginLeft = 40;
+
+            const svg = d3.select(svgID)
+
+            const x = d3.scaleLinear()
+                .domain([0, 20])
+                .range([marginLeft, width - marginRight]);
+            
+            const y = d3.scaleLinear()
+                .domain([min, max])
+                .range([height - marginBottom, marginTop]);
+
+            svg.append("g")
+                .attr("transform", `translate(0,${height - marginBottom})`)
+                .call(d3.axisBottom(x).ticks(20))
+                .call(g => g.append("text")
+                    .attr("fill", "currentColor")
+                    .attr("text-anchor", "end")
+                    .text("Rank"));
+
+
+            svg.append("g")
+                .attr("transform", `translate(${marginLeft},0)`)
+                .call(d3.axisLeft(y))
+                .call(g => g.append("text")
+                    .attr("x", -marginLeft)
+                    .attr("y", 10)
+                    .attr("fill", "currentColor")
+                    .attr("text-anchor", "start")
+                    .text(attribute));
+
+
+
+            data.forEach(function(d){
+                svg.append("g")
+                    .attr("stroke", "#000")
+                    .attr("stroke-opacity", 0.2)
+                    .append("circle")
+                    .attr("cx", x(d.rank))
+                    .attr("cy", y(d[attribute]))
+                    .attr("r", 2.5);
+            });
+                
+            
+            
+        });
+}
+
+
+
+
+
