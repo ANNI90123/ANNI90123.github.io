@@ -20,18 +20,11 @@ layout: default
     <svg id="m31"></svg>
     <svg id="m32"></svg>
     <svg id="m33"></svg>
-
-
 </div>
-
-<select id="selectButton"></select>
-<svg id="charti" width="1000px" height="700px"></svg> 
 <script>
     scatterPlot("js/all_queries_domains_with_ranks_and_snapshots.csv", "#m11", "h1 Word Count");
     scatterPlot("js/all_queries_domains_with_ranks_and_snapshots.csv", "#m12", "h2 Word Count");
     scatterPlot("js/all_queries_domains_with_ranks_and_snapshots.csv", "#m13", "h3 Word Count");    
     scatterPlot("js/all_queries_domains_with_ranks_and_snapshots.csv", "#chart0", "h1 Word Count");
     plot("js/all_queries_domains_with_ranks_and_snapshots.csv", "#chart1", "h1 Word Count");
-    filter();
-    update("js/all_queries_domains_with_ranks_and_snapshots.csv", 1)
 </script>
