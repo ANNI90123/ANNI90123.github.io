@@ -93,3 +93,9 @@ background-color: rgb(85, 83, 75);
 color: rgb(0, 0, 0);
 text-align: center;
 }
+
+
+.matrix{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}

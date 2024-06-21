@@ -1,3 +1,5 @@
+
+
 function barChart (dataPath, svgID, x_data, y_data){
     d3.csv(dataPath, function(firstdata) {
         
@@ -230,18 +232,16 @@ function dotChart(dataPath, svgID, attribute){
             const max = d3.max(data, d => d[attribute]);
             const min = d3.min(data, d => d[attribute]);
 
-            const width = 800;
-            const height = 400;
+            const svg = d3.select(svgID);
+            const bbox = svg.node().getBoundingClientRect();
+
+            const width = bbox.width;
+            const height = bbox.height;
             const marginTop = 20;
             const marginRight = 30;
             const marginBottom = 30;
             const marginLeft = 40;
 
-            const svg = d3.select(svgID)
-                //.attr("width", width)
-                //.attr("height", height)
-                //.attr("viewBox", [0, 0, width, height])
-                //.attr("style", "max-width: 100%; height: auto; height: intrinsic;");
 
             const x = d3.scaleLinear()
                 .domain([0, 20])
@@ -251,9 +251,14 @@ function dotChart(dataPath, svgID, attribute){
                 .domain([min, max])
                 .range([height - marginBottom, marginTop]);
 
+
+            var numberTicks = 20;    
+            if(width < 400){
+                numberTicks = 10;
+            }
             svg.append("g")
                 .attr("transform", `translate(0,${height - marginBottom})`)
-                .call(d3.axisBottom(x).ticks(20))
+                .call(d3.axisBottom(x).ticks(numberTicks))
                 .call(g => g.append("text")
                     .attr("fill", "currentColor")
                     .attr("text-anchor", "end")
@@ -301,14 +306,17 @@ function plot(dataPath, svgID, attribute){
             rank = d.rank -1;
             values_per_rank[rank].push(d[attribute]);
         });
-        
-        // Decalre mesurements
-        var margin = {top: 30, right: 30, bottom: 30, left: 40};
-        var width = 800;
-        var height = 400;
 
         // Select SVG
         const svg = d3.select(svgID);
+        const bbox = svg.node().getBoundingClientRect();
+
+        // Decalre mesurements
+        var margin = {top: 30, right: 30, bottom: 30, left: 40};
+        var width = bbox.width;
+        var height = bbox.height;
+
+        
 
 
         const min = d3.min(data, d => d[attribute]);
@@ -447,14 +455,19 @@ function scatterPlot(dataPath, svgID, attribute){
             const max = d3.max(data, d => d[attribute]);
             const min = d3.min(data, d => d[attribute]);
 
-            const width = 800;
-            const height = 400;
+            const svg = d3.select(svgID);
+            const bbox = svg.node().getBoundingClientRect();
+
+            const width = bbox.width;
+            const height = bbox.height;
             const marginTop = 20;
             const marginRight = 30;
             const marginBottom = 30;
             const marginLeft = 40;
 
-            const svg = d3.select(svgID)
+            console.log(width + " , " + height);
+
+            
 
             const x = d3.scaleLinear()
                 .domain([0, 20])
@@ -464,9 +477,13 @@ function scatterPlot(dataPath, svgID, attribute){
                 .domain([min, max])
                 .range([height - marginBottom, marginTop]);
 
+            var numberTicks = 20;    
+            if(width < 400){
+                numberTicks = 10;
+            }
             svg.append("g")
                 .attr("transform", `translate(0,${height - marginBottom})`)
-                .call(d3.axisBottom(x).ticks(20))
+                .call(d3.axisBottom(x).ticks(numberTicks))
                 .call(g => g.append("text")
                     .attr("fill", "currentColor")
                     .attr("text-anchor", "end")
@@ -499,8 +516,6 @@ function scatterPlot(dataPath, svgID, attribute){
             
         });
 }
-
-
 
 
 
