@@ -1,4 +1,113 @@
+async function bar_plot(dataPath, svgID){
+    
+    const alphabet = await d3.csv(dataPath);
+    console.log(alphabet);
 
+    const plot = Plot.plot({
+        y: {
+          grid: true,
+          percent: true
+        },
+        marks: [
+          Plot.ruleY([0]),
+          Plot.barY(alphabet, {x: "letter", y: "frequency", sort: {x: "y", reverse: true}})
+        ]
+      });
+
+    const div = document.querySelector(svgID);
+    div.append(plot); 
+
+}
+
+
+
+
+async function scatter_plot(dataPath, svgID, attribute){
+
+    const data = await d3.csv(dataPath);
+    console.log(data);
+
+    data.forEach(d => d.rank = +d.rank);
+    data.forEach(d => d[attribute] = +d[attribute]);
+
+    const plot = Plot.plot({
+        y: {
+          grid: true,
+          percent: true
+        },
+        marks: [
+          Plot.dot(data, {x: "Rank", y: attribute})
+        ]
+      });
+
+    const svg = document.querySelector(svgID);
+    svg.append(plot); 
+
+}
+
+
+async function box_plot(dataPath, svgID, attribute){
+    const data = await d3.csv(dataPath);
+    console.log(data);
+
+    data.forEach(d => d.rank = +d.rank);
+    data.forEach(d => d[attribute] = +d[attribute]);
+
+    const plot = Plot.plot({
+        y: {
+          grid: true
+        },
+        marks: [
+          Plot.boxY(data, {x: "rank", y: attribute})
+        ]
+      });
+
+    const svg = document.querySelector(svgID);
+    svg.append(plot); 
+
+}
+
+
+
+async function grouped_box_plot(dataPath, svgID, attribute){
+
+    const data = await d3.csv(dataPath);
+    data.forEach(d => d.Rank = +d.Rank);
+    data.forEach(d => d[attribute] = +d[attribute]);
+
+
+    const plot = Plot.plot({
+        marginBottom: 200,
+        x: {
+            tickRotate: 90, label: null
+        },
+        y: {
+          grid: true
+        },
+        
+        marks: [
+          Plot.barY(data, {y: attribute, fx: "Rank",  x: "Query", fill: "Query"})
+        ]
+      });
+
+    const div = document.querySelector(svgID);
+    div.append(plot); 
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+//---------------------------------------------------------------------------------------------
 
 function barChart (dataPath, svgID, x_data, y_data){
     d3.csv(dataPath, function(firstdata) {
@@ -516,6 +625,268 @@ function scatterPlot(dataPath, svgID, attribute){
             
         });
 }
+
+
+
+// ================================================================================
+// ================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function filter(){
+
+    // set the dimensions and margins of the graph
+    var margin = {top: 10, right: 30, bottom: 30, left: 60},
+        width = 460 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+    
+    // append the svg object to the body of the page
+    var svg = d3.select("#charti")
+      .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")");
+    
+    //Read the data
+    d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/5_OneCatSevNumOrdered.csv", function(data) {
+    
+        // List of groups (here I have one group per column)
+        var allGroup = d3.map(data, function(d){return(d.name)}).keys()
+    
+        // add the options to the button
+        d3.select("#selectButton")
+          .selectAll('myOptions')
+             .data(allGroup)
+          .enter()
+            .append('option')
+          .text(function (d) { return d; }) // text showed in the menu
+          .attr("value", function (d) { return d; }) // corresponding value returned by the button
+    
+        // A color scale: one color for each group
+        var myColor = d3.scaleOrdinal()
+          .domain(allGroup)
+          .range(d3.schemeSet2);
+    
+        // Add X axis --> it is a date format
+        var x = d3.scaleLinear()
+          .domain(d3.extent(data, function(d) { return d.year; }))
+          .range([ 0, width ]);
+        svg.append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x).ticks(7));
+    
+        // Add Y axis
+        var y = d3.scaleLinear()
+          .domain([0, d3.max(data, function(d) { return +d.n; })])
+          .range([ height, 0 ]);
+        svg.append("g")
+          .call(d3.axisLeft(y));
+    
+        // Initialize line with first group of the list
+        var line = svg
+          .append('g')
+          .append("path")
+            .datum(data.filter(function(d){return d.name==allGroup[0]}))
+            .attr("d", d3.line()
+              .x(function(d) { return x(d.year) })
+              .y(function(d) { return y(+d.n) })
+            )
+            .attr("stroke", function(d){ return myColor("valueA") })
+            .style("stroke-width", 4)
+            .style("fill", "none")
+    
+        // A function that update the chart
+        function update(selectedGroup) {
+    
+          // Create new data with the selection?
+          var dataFilter = data.filter(function(d){return d.name==selectedGroup})
+    
+          // Give these new data to update line
+          line
+              .datum(dataFilter)
+              .transition()
+              .duration(1000)
+              .attr("d", d3.line()
+                .x(function(d) { return x(d.year) })
+                .y(function(d) { return y(+d.n) })
+              )
+              .attr("stroke", function(d){ return myColor(selectedGroup) })
+        }
+    
+        // When the button is changed, run the updateChart function
+        d3.select("#selectButton").on("change", function(d) {
+            // recover the option that has been chosen
+            var selectedOption = d3.select(this).property("value")
+            // run the updateChart function with this selected option
+            update(selectedOption)
+        })
+    
+    })
+    }
+    
+function myDountChart(dataPath, svgID){
+
+    d3.csv(dataPath, function(data) {
+        //console.log(data);
+
+        const width = 500;
+        const height = Math.min(width, 500);
+        const radius = Math.min(width, height) / 2;
+
+        const arc = d3.arc()
+            .innerRadius(radius * 0.67)
+            .outerRadius(radius - 1);
+
+        const pie = d3.pie()(dataPath);
+
+        console.log(pie);
+
+        const color = d3.scaleOrdinal()
+            .domain(data.map(d => d.name))
+            .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), data.length).reverse());
+
+        const svg = d3.select(svgID)
+            .attr("width", width)
+            .attr("height", height)
+            .attr("viewBox", [-width / 2, -height / 2, width, height])
+            .attr("style", "max-width: 100%; height: auto;");
+
+        svg.append("g")
+            .selectAll("path")
+            .data(pie(data))
+            .enter()
+            .append("path")
+            .attr("fill", d => color(d.data.name))
+            .attr("d", arc)
+            .append("title")
+            .text(d => `${d.data.name}: ${d.data.value.toLocaleString()}`);
+
+        svg.append("g")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", 12)
+            .attr("text-anchor", "middle")
+            .selectAll("text")
+            .data(pie(array))
+            .enter()
+            .append("text")
+            .attr("transform", d => `translate(${arc.centroid(d)})`)
+            .call(text => text.append("tspan")
+                .attr("y", "-0.4em")
+                .attr("font-weight", "bold")
+                .text(d => d.data.name))
+            .call(text => text.filter(d => (d.endAngle - d.startAngle) > 0.25).append("tspan")
+                .attr("x", 0)
+                .attr("y", "0.7em")
+                .attr("fill-opacity", 0.7)
+                .text(d => d.data.value.toLocaleString("en-US")));
+    });
+
+
+    function update(rank){
+
+        var frequency
+        const values_per_attribute = Array.from({length: 6}, e => Array());
+
+        data.forEach(function(d){
+            if(d.rank == rank){
+                for(let i = 0; i < 6; i++){
+                    let string = "h"+ (i+1) + " Word Count";
+                    values_per_attribute[i].push(d[string]);
+
+                }
+                
+
+            }
+            
+        });
+    }
+
+}
+
+
+function test(array){
+
+    const pie = d3.pie()(array);
+
+        console.log(pie);
+
+
+
+    svg.append("g")
+        .attr("text-anchor", "middle")
+        .selectAll()
+        .data(pie)
+        .join("text")
+        .attr("transform", d => `translate(${arcLabel.centroid(d)})`)
+        .call(text => text.append("tspan")
+            .attr("y", "-0.4em")
+            .attr("font-weight", "bold")
+            .text(d => d.data.name))
+        .call(text => text.filter(d => (d.endAngle - d.startAngle) > 0.25).append("tspan")
+            .attr("x", 0)
+            .attr("y", "0.7em")
+            .attr("fill-opacity", 0.7)
+            .text(d => d.data.value.toLocaleString("en-US")));
+
+}
+
+
+function update(dataPath, rank){
+
+    d3.csv(dataPath, function(data) {
+
+        for (let i= 0; i < 6; i++){
+            let attribute = "h"+ (i+1) + " Word Count";
+            data.forEach(d => d[attribute] = +d[attribute]);
+        }
+        data.forEach(d => d.Total_h_Word_Count = +d.Total_h_Word_Count);
+        
+        const values_per_attribute = new Array(7).fill(0);
+
+        var counter = 0;
+        data.forEach(function(d){
+            if(d.rank == rank){
+                values_per_attribute[0] += d.Total_h_Word_Count;
+                for(let i = 1; i <= 6; i++){
+                    let string = "h"+ (i) + " Word Count";
+                    values_per_attribute[i] += d[string];
+                    
+                }
+            }
+        });
+
+        //console.log(values_per_attribute[0] + ", " + values_per_attribute[1]);
+        for(let i = 1; i <= 6; i++){
+            values_per_attribute[i] /= values_per_attribute[0];
+        }
+
+        console.log(values_per_attribute);
+
+        test(values_per_attribute);
+
+    });
+
+    
+
+    
+}
+
+
+
+
 
 
 
