@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: default2
 ---
 ## Bing
 <p class="subtitle">
