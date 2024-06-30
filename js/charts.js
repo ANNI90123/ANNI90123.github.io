@@ -32,11 +32,10 @@ async function scatter_plot(dataPath, svgID, attribute){
 
     const plot = Plot.plot({
         y: {
-          grid: true,
-          percent: true
+          grid: true
         },
         marks: [
-          Plot.dot(data, {x: "Rank", y: attribute})
+          Plot.dot(data, {x: "rank", y: attribute})
         ]
       });
 
