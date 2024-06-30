@@ -1,4 +1,4 @@
-Query,Domain,rank,Title,Title Word Count,Image Count,h1 Word Count,h2 Word Count,h3 Word Count,h4 Word Count,h5 Word Count,h6 Word Count,Total h Word Count,FUNC Word Count,FWR,TTR,Paragraph FUNC Word Count,Paragraph FWR,Paragraph TTR,List Item FUNC Word Count,List Item FWR,List Item TTR
+Query,Domain,rank,Title,Title Word Count,Image Count,h1 Word Count,h2 Word Count,h3 Word Count,h4 Word Count,h5 Word Count,h6 Word Count,Total_h_Word_Count,FUNC Word Count,FWR,TTR,Paragraph FUNC Word Count,Paragraph FWR,Paragraph TTR,List Item FUNC Word Count,List Item FWR,List Item TTR
 best 3d glasses,https://www.youtube.com/watch?v=vR4FdWODT8M,1,15,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 best 3d glasses,https://www.amazon.de/-/en/gp/bestsellers/ce-de/1382695031,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 best 3d glasses,https://www.projectorreviews.com/home-theater-and-projectors-the-technical-side/3d-active-shutter-glasses-technical-overview/,3,10,10,0,0,0,0,0,0,0,0,0,0,0,6,0.4,1.0,0,0,0
