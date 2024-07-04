@@ -3,7 +3,12 @@ async function bar_plot(dataPath, svgID){
     const alphabet = await d3.csv(dataPath);
     console.log(alphabet);
 
+    const svg = d3.select(svgID);
+    const bbox = svg.node().getBoundingClientRect();
+
     const plot = Plot.plot({
+        height: bbox.height,
+        width: bbox.width,
         y: {
           grid: true,
           percent: true
@@ -20,6 +25,21 @@ async function bar_plot(dataPath, svgID){
 }
 
 
+function test2(){
+    console.log("Hi");
+    d3.select("#selector").on("change", function(d) {
+    
+        // recover the option that has been chosen
+        var selectedOption = d3.select(this).property("value")
+        // run the updateChart function with this selected option
+        console.log(d3.select(this).property("value"));
+    });
+
+}
+
+
+
+
 
 
 async function scatter_plot(dataPath, svgID, attribute){
@@ -30,7 +50,12 @@ async function scatter_plot(dataPath, svgID, attribute){
     data.forEach(d => d.rank = +d.rank);
     data.forEach(d => d[attribute] = +d[attribute]);
 
+    const svg = d3.select(svgID);
+    const bbox = svg.node().getBoundingClientRect();
+
     const plot = Plot.plot({
+        height: bbox.height,
+        width: bbox.width,
         y: {
           grid: true
         },
@@ -39,8 +64,8 @@ async function scatter_plot(dataPath, svgID, attribute){
         ]
       });
 
-    const svg = document.querySelector(svgID);
-    svg.append(plot); 
+    const div = document.querySelector(svgID);
+    div.append(plot); 
 
 }
 
@@ -52,7 +77,12 @@ async function box_plot(dataPath, svgID, attribute){
     data.forEach(d => d.rank = +d.rank);
     data.forEach(d => d[attribute] = +d[attribute]);
 
+    const svg = d3.select(svgID);
+    const bbox = svg.node().getBoundingClientRect();
+
     const plot = Plot.plot({
+        height: bbox.height,
+        width: bbox.width,
         y: {
           grid: true
         },
@@ -61,8 +91,8 @@ async function box_plot(dataPath, svgID, attribute){
         ]
       });
 
-    const svg = document.querySelector(svgID);
-    svg.append(plot); 
+    const div = document.querySelector(svgID);
+    div.append(plot); 
 
 }
 
