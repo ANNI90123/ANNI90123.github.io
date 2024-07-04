@@ -4,4 +4,24 @@
 
 layout: default2
 ---
-# Hello
+<article class="uk-article">
+    <h1 class="uk-article-title">Is Google getting worse?</h1>
+    <p>
+        Some text about the fact that people experience unsatisfaction with their google results
+    </p>
+</article>
+
+<article class="uk-article">
+    <h1 class="uk-article-title">What is SEO and what does it have to do with it</h1>
+    <p>
+        A short explanation what SEO is and how it contributes to bad search engine result pages
+    </p>
+</article>
+
+<article class="uk-article">
+    <h1 class="uk-article-title">What are we observing?</h1>
+    <p>
+        Some text about what we're doing, the analysis of different SERPs(their attributes) in correlation with their rank, the analysis of how that changes over time <br>
+        Some information on where to find that on our website
+    </p>
+</article>

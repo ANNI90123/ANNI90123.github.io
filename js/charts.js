@@ -47,7 +47,7 @@ async function scatter_plot(dataPath, svgID, attribute){
     const data = await d3.csv(dataPath);
     console.log(data);
 
-    data.forEach(d => d.rank = +d.rank);
+    data.forEach(d => d.Rank = +d.Rank);
     data.forEach(d => d[attribute] = +d[attribute]);
 
     const svg = d3.select(svgID);
@@ -60,7 +60,7 @@ async function scatter_plot(dataPath, svgID, attribute){
           grid: true
         },
         marks: [
-          Plot.dot(data, {x: "rank", y: attribute})
+          Plot.dot(data, {x: "Rank", y: attribute})
         ]
       });
 
@@ -74,7 +74,7 @@ async function box_plot(dataPath, svgID, attribute){
     const data = await d3.csv(dataPath);
     console.log(data);
 
-    data.forEach(d => d.rank = +d.rank);
+    data.forEach(d => d.Rank = +d.Rank);
     data.forEach(d => d[attribute] = +d[attribute]);
 
     const svg = d3.select(svgID);
@@ -87,7 +87,7 @@ async function box_plot(dataPath, svgID, attribute){
           grid: true
         },
         marks: [
-          Plot.boxY(data, {x: "rank", y: attribute})
+          Plot.boxY(data, {x: "Rank", y: attribute})
         ]
       });
 
