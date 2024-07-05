@@ -8,43 +8,55 @@
 
         <!--<script src="https://d3js.org/d3.v7.js"></script>
         <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>-->
+        
+        <!-- Plot library -->
         <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
         <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6"></script>
+
+        <!-- Code for plots -->
         <script src="{{ '/js/charts.js' | relative_url }}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.6/dist/js/uikit.min.js"></script>
+
+        <!-- UIKit 
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.6/dist/js/uikit.min.js"></script>-->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.6/dist/js/uikit.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.6/dist/js/uikit-icons.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.27.2/js/components/accordion.min.js"></script>
+
+        
         
     </head>
-    <body>
-        <div class="uk-background-muted uk-height-match uk-padding">
+    <body class="uk-background-muted">
+        <div class="uk-background-secondary uk-light uk-height-match uk-padding ">
             <h1 class="uk-heading-small uk-text-center">Search Engine Observatory</h1>
             <p class="uk-text-large uk-text-center">Is Google getting worse? - An Observation</p>
         </div>
-
-        <nav class="uk-navbar">
-            <div class="uk-container">
-                <div uk-navbar>
-                    <div class="uk-navbar-center">
-                        <ul class="uk-navbar-nav">
-                            <!--
-                            <li><a href="index.html">Introduction</a></li>
-                            <li><a href="general.html">General</a></li>
-                            <li><a href="startpage.html">Startpage</a></li>
-                            <li><a href="bing.html">Bing</a></li>
-                            <li><a href="ddg.html">DuckDuckGo</a></li>
-                            <li><a href="research.html">The Research</a></li>-->
-                            <li><a href="index.html">Introduction</a></li>
-                            <li><a href="property.html">Property Observation</a></li>
-                            <li><a href="temporal.html">Temporal Observation</a></li>
-                        </ul>
+        <div class="uk-background-default">
+            <nav class="uk-navbar">
+                <div class="uk-container">
+                    <div uk-navbar>
+                        <div class="uk-navbar-center">
+                            <ul class="uk-navbar-nav">
+                                <!--
+                                <li><a href="index.html">Introduction</a></li>
+                                <li><a href="general.html">General</a></li>
+                                <li><a href="startpage.html">Startpage</a></li>
+                                <li><a href="bing.html">Bing</a></li>
+                                <li><a href="ddg.html">DuckDuckGo</a></li>
+                                <li><a href="research.html">The Research</a></li>-->
+                                <li><a href="index.html">Introduction</a></li>
+                                <li><a href="property.html">Property Observation</a></li>
+                                <li><a href="temporal.html">Temporal Observation</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
         </nav>
+
+
+        </div>
+        
     
 
-        <div class="uk-container">
+        <div class="uk-container uk-margin-medium-top">
             {{ content }}
         </div>
 

@@ -13,7 +13,7 @@ layout: default2
     <div>
         <div class="uk-card uk-card-default uk-padding-small uk-text-center">
             <div class="uk-card-header">
-                <h3> #h1 tags </h3>
+                <h3> Number of h1 tags </h3>
             </div>
             <div class="uk-card-body uk-height-medium">
                 <svg id="ID01" class="uk-height-1-1 uk-width-1-1"></svg>
@@ -23,7 +23,7 @@ layout: default2
     <div>
         <div class="uk-card uk-card-default uk-padding-small uk-text-center">
             <div class="uk-card-header">
-                <h3> #h2 tags</h3>
+                <h3> Number of h2 tags</h3>
             </div>
             <div class="uk-card-body uk-height-medium">
                 <svg id="ID02" class="uk-height-1-1 uk-width-1-1"></svg>
@@ -36,7 +36,7 @@ layout: default2
     <div>
         <div class="uk-card uk-card-default uk-padding-small uk-text-center">
             <div class="uk-card-header">
-                <h3> #h3 tags</h3>
+                <h3> Number of h3 tags</h3>
             </div>
             <div class="uk-card-body uk-height-medium">
                 <svg id="ID03" class="uk-height-1-1 uk-width-1-1"></svg>
@@ -46,7 +46,7 @@ layout: default2
     <div>
         <div class="uk-card uk-card-default uk-padding-small uk-text-center">
             <div class="uk-card-header">
-                <h3> #h4 tags</h3>
+                <h3> Number of h4 tags</h3>
             </div>
             <div class="uk-card-body uk-height-medium">
                 <svg id="ID04" class="uk-height-1-1 uk-width-1-1"></svg>
