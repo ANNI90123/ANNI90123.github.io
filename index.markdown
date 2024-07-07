@@ -34,7 +34,7 @@ layout: default2
     </div>
     <div class="uk-card-body">
         <p>
-            Some text about what we're doing, the analysis of different SERPs(their attributes) in correlation with their rank, the analysis of how that changes over time <br>
+            Some text about what we're doing, the analysis of different SERPs(their attributes) in correlation with their rank, the analysis of how that changes over time.
             Some information on where to find that on our website
         </p>
     </div>
