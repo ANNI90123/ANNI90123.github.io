@@ -45,10 +45,14 @@ function test2(){
 async function scatter_plot(dataPath, svgID, attribute){
 
     const data = await d3.csv(dataPath);
-    console.log(data);
+    //console.log(data);
 
     data.forEach(d => d.Rank = +d.Rank);
     data.forEach(d => d[attribute] = +d[attribute]);
+
+    data.sort((a, b) => a[attribute] - b[attribute]);
+    let filtered_data = data.slice(0, Math.floor(data.length * 0.97));
+    //console.log(filtered_data);
 
     const svg = d3.select(svgID);
     const bbox = svg.node().getBoundingClientRect();
@@ -57,10 +61,13 @@ async function scatter_plot(dataPath, svgID, attribute){
         height: bbox.height,
         width: bbox.width,
         y: {
-          grid: true
+          grid: true,
+          domain: [0, filtered_data[filtered_data.length-1][attribute]]
+
         },
         marks: [
-          Plot.dot(data, {x: "Rank", y: attribute})
+          Plot.dot(filtered_data, {x: "Rank", y: attribute}),       //only shows dot for the lower 97% of the data, to show data more clearly
+          Plot.linearRegressionY(data, {x: "Rank", y: attribute})   //shows linear regression for whole data set
         ]
       });
 
@@ -681,7 +688,7 @@ function filter(){
         height = 400 - margin.top - margin.bottom;
     
     // append the svg object to the body of the page
-    var svg = d3.select("#charti")
+    var svg = d3.select("#ID01")
       .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -908,9 +915,6 @@ function update(dataPath, rank){
 
     });
 
-    
-
-    
 }
 
 
