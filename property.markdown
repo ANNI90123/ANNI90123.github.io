@@ -2,11 +2,9 @@
 layout: default2
 ---
 
-## Property Observation
-
-
 <article class="uk-article">
-    In the following you can see how different characteristics of websites can be related to their rank.
+    <h1 class="uk-article-title"> Property Observation </h1>
+    <p>In the following you can see how different characteristics of websites can be related to their rank.</p>
 </article>
 
 <ul uk-accordion="multiple: true">
@@ -233,6 +231,16 @@ layout: default2
         </div>
     </li>
 </ul>
+
+<article class="uk-article">
+    <h2> Domain observation </h2>
+    <p class="uk-link-muted">You can find a domain observation <a href="https://4uqh0g.csb.app/">here</a></p>
+</article>
+
+<article class="uk-article">
+    <h2> Image Count observation </h2>
+    <p class="uk-link-muted">You can find a domain observation <a href="https://hmnlyv.csb.app/">here</a></p>
+</article>
 
 
 
