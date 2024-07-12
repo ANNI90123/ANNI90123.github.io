@@ -3,7 +3,7 @@ layout: default2
 ---
 
 <article class="uk-article">
-    <h1 class="uk-article-title"> Property Observation </h1>
+    <h1 class="uk-article-title"> Characteristics Observation </h1>
     <p>
         In the following you can see visualisations of how different characteristics of webpages can be related to their rank.<br>
         <br>
