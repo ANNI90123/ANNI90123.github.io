@@ -1,45 +1,3 @@
-async function bar_plot(dataPath, svgID){
-    
-    const alphabet = await d3.csv(dataPath);
-    console.log(alphabet);
-
-    const svg = d3.select(svgID);
-    const bbox = svg.node().getBoundingClientRect();
-
-    const plot = Plot.plot({
-        height: bbox.height,
-        width: bbox.width,
-        y: {
-          grid: true,
-          percent: true
-        },
-        marks: [
-          Plot.ruleY([0]),
-          Plot.barY(alphabet, {x: "letter", y: "frequency", sort: {x: "y", reverse: true}})
-        ]
-      });
-
-    const div = document.querySelector(svgID);
-    div.append(plot); 
-
-}
-
-
-function test2(){
-    console.log("Hi");
-    d3.select("#selector").on("change", function(d) {
-    
-        // recover the option that has been chosen
-        var selectedOption = d3.select(this).property("value")
-        // run the updateChart function with this selected option
-        console.log(d3.select(this).property("value"));
-    });
-
-}
-
-
-
-
 
 
 async function scatter_plot(dataPath, svgID, attribute){
@@ -66,8 +24,62 @@ async function scatter_plot(dataPath, svgID, attribute){
 
         },
         marks: [
-          Plot.dot(filtered_data, {x: "Rank", y: attribute}),       //only shows dot for the lower 97% of the data, to show data more clearly
+          Plot.dot(filtered_data, {x: "Rank", y: attribute}),     //only shows dot for the lower 97% of the data, to show data more clearly
           Plot.linearRegressionY(data, {x: "Rank", y: attribute})   //shows linear regression for whole data set
+        ]
+      });
+
+    const div = document.querySelector(svgID);
+    div.append(plot); 
+
+}
+
+
+
+// -------------------------------------------------------------------
+// currently unused code 
+
+
+async function scatter_plot_time(dataPath, svgID, attribute, datecount){
+
+    const data = await d3.csv(dataPath);
+
+    data.forEach(d => d.Date = new Date(d.date));
+    data.forEach(d => d[attribute] = +d[attribute]);
+
+
+    const average_map = new Map();
+    const count_map = new Map();
+    data.forEach(function(d){
+        if(!average_map.has(d.Date)){
+            average_map.set(d.Date, 0);
+            count_map.set(d.Date, 0);
+        }
+    });
+
+    data.forEach(function(d){
+        const new_average = average_map.get(d.Date) + d[attribute];
+        const new_count = count_map.get(d.Date) + 1;
+        average_map.set(d.Date, new_average);
+        count_map.set(d.Date, new_count);
+
+
+    });
+
+
+    const svg = d3.select(svgID);
+    const bbox = svg.node().getBoundingClientRect();
+
+    const plot = Plot.plot({
+        height: bbox.height,
+        width: bbox.width,
+        y: {
+          grid: true,
+          domain: [0, filtered_data[filtered_data.length-1][attribute]]
+
+        },
+        marks: [
+          Plot.dot(data, {x: "Date", y: attribute}), 
         ]
       });
 
@@ -104,7 +116,6 @@ async function box_plot(dataPath, svgID, attribute){
 }
 
 
-
 async function grouped_box_plot(dataPath, svgID, attribute){
 
     const data = await d3.csv(dataPath);
@@ -133,17 +144,36 @@ async function grouped_box_plot(dataPath, svgID, attribute){
 
 }
 
+async function bar_plot(dataPath, svgID){
+    
+    const alphabet = await d3.csv(dataPath);
+    console.log(alphabet);
 
+    const svg = d3.select(svgID);
+    const bbox = svg.node().getBoundingClientRect();
 
+    const plot = Plot.plot({
+        height: bbox.height,
+        width: bbox.width,
+        y: {
+          grid: true,
+          percent: true
+        },
+        marks: [
+          Plot.ruleY([0]),
+          Plot.barY(alphabet, {x: "letter", y: "frequency", sort: {x: "y", reverse: true}})
+        ]
+      });
 
+    const div = document.querySelector(svgID);
+    div.append(plot); 
 
-
-
-
-
+}
 
 
 //---------------------------------------------------------------------------------------------
+// old code for charts
+
 
 function barChart (dataPath, svgID, x_data, y_data){
     d3.csv(dataPath, function(firstdata) {
@@ -663,9 +693,6 @@ function scatterPlot(dataPath, svgID, attribute){
 }
 
 
-
-// ================================================================================
-// ================================================================================
 
 
 
