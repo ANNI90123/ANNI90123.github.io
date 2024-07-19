@@ -296,7 +296,12 @@ layout: default2
 
 <article class="uk-article">
     <h2> Image Count observation </h2>
-    <p class="uk-link-muted">You can find a domain observation <a href="https://hmnlyv.csb.app/">here</a></p>
+    <p class="uk-link-muted">You can find an image count observation <a href="https://hmnlyv.csb.app/">here</a></p>
+</article>
+
+<article class="uk-article">
+    <h2> Title Word Count observation </h2>
+    <p class="uk-link-muted">You can find a title word count observation <a href="TitleWordCount.html">here</a></p>
 </article>
 
 

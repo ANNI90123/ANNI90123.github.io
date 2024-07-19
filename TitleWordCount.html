@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Search Engine Observatory</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+      /* Body styling */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0; /* Light gray background */
+        padding: 20px;
+      }
+
+      /* Chart container styling */
+      .chart-container {
+        background-color: #ffffff; /* White background */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+        margin-bottom: 30px;
+      }
+
+      /* Chart title styling */
+      .chart-title {
+        font-size: 25px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      /* Select box styling */
+      select {
+        font-size: 16px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      /* Button styling */
+      .sort-button,
+      .compare-button {
+        font-size: 14px;
+        padding: 8px 12px;
+        background-color: #007bff; /* Bootstrap blue color */
+        color: #ffffff; /* White text */
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+        margin-right: 5px;
+      }
+
+      .sort-button:hover,
+      .compare-button:hover {
+        background-color: #0056b3; /* Darker shade on hover */
+      }
+
+      /* SVG styling */
+      svg {
+        font-size: 14px; /* Base font size for SVG elements */
+      }
+
+      /* Bar styling */
+      .bar {
+        fill: steelblue;
+        mix-blend-mode: multiply;
+      }
+
+      .domain-list {
+        counter-reset: list-counter; /* Initialize the counter */
+      }
+
+      .domain-list li {
+        counter-increment: list-counter; /* Increment the counter for each list item */
+        list-style: none; /* Remove default list styling */
+      }
+
+      .domain-list li::before {
+        content: counter(list-counter) ". "; /* Add the counter value before each list item */
+      }
+
+      /* Domain list styling */
+      .domain-list {
+        font-size: 14px;
+        margin-top: 10px;
+      }
+
+      .domain-list ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .domain-list li {
+        margin-bottom: 5px;
+      }
+
+      body {
+        background-color: rgb(255, 255, 255);
+        /*margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 50px;*/
+        font-family: Andale Mono, monospace;
+      }
+      .header {
+        background-color: #222;
+        padding: 30px;
+        text-align: center;
+        font-size: 35px;
+        color: white;
+      }
+      /* Style the top navigation bar */
+      .topnav {
+        overflow: hidden;
+        background-color: white;
+        display: flex;
+        justify-content: center; /* Centers items horizontally */
+      }
+
+      /* Style the topnav links */
+      .topnav a {
+        float: left;
+        display: block;
+        color: black;
+        text-align: center;
+        /*padding: 14px 30px;*/
+        text-decoration: none;
+        padding-top: 14px;
+        padding-bottom: 14px;
+        width: 16.66%;
+      }
+
+      /* Change color on hover */
+      .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+
+      h3 {
+        color: rgb(22, 46, 23);
+        text-align: center;
+      }
+      p {
+        font-size: 1.5rem;
+        color: white;
+        text-align: center;
+      }
+
+      .bodytext {
+        color: black;
+      }
+
+      .div1 {
+        display: flex;
+        justify-content: center;
+      }
+
+      .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: rgb(85, 83, 75);
+        color: black;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      Search Engine Observatory
+      <p>Is Google getting worse? - An Observation</p>
+    </div>
+    <div class="topnav">
+      <a href="https://anni90123.github.io/index.html">Introduction</a>
+      <a href="https://anni90123.github.io/property.html"
+        >Property Observation</a
+      >
+      <a href="https://anni90123.github.io/temporal.html"
+        >temporal Observation</a
+      >
+    </div>
+
+    <p class="bodytext">
+      This program visualizes the ranking of domains for different queries on
+      Google over three different dates. It helps to analyze and observe changes
+      in search results over time.
+    </p>
+
+    <p class="bodytext">
+      How to use ? Easy!! choose the query from the list and the top domains
+      will show up in this specific date.
+    </p>
+
+    <!-- Chart 1 -->
+    <div id="chart1" class="chart-container">
+      <div class="chart-title">Chart 1: 8.3.2024</div>
+      <select id="queryOptions1"></select>
+      <div class="domain-list">
+        <strong>Title Word Counts:</strong>
+        <ul></ul>
+      </div>
+    </div>
+
+    <!-- Chart 2 -->
+    <div id="chart2" class="chart-container">
+      <div class="chart-title">Chart 2: 24.6.2024</div>
+      <select id="queryOptions2"></select>
+      <div class="domain-list">
+        <strong>Title Word Counts:</strong>
+        <ul></ul>
+      </div>
+    </div>
+
+    <!-- Chart 3 -->
+    <div id="chart3" class="chart-container">
+      <div class="chart-title">Chart 3: 25.4.2024</div>
+      <select id="queryOptions3"></select>
+      <div class="domain-list">
+        <strong>Title Word Counts:</strong>
+        <ul></ul>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="divLeft">Bauhaus-Universität Weimar</div>
+    </div>
+
+    <script>
+      // Function to generate rainbow colors based on position
+      function rainbowColorScale(position, total) {
+        const hue = (position / total) * 360; // Scale hue from 0 to 360
+        return `hsl(${hue}, 80%, 60%)`; // Use HSL color model for rainbow effect
+      }
+
+      // Function to create a chart
+      function createChart(chartId, data) {
+        // Set up the dimensions and margins of the graph
+        const margin = { top: 20, right: 20, bottom: 30, left: 40 },
+          width = 800 - margin.left - margin.right,
+          height = 400 - margin.top - margin.bottom;
+
+        // Append the svg object to the body of the page
+        const svg = d3
+          .select(chartId)
+          .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        // X axis
+        const x = d3
+          .scaleBand()
+          .range([0, width])
+          .padding(0.1)
+          .domain(data.map((d) => d.word));
+
+        svg
+          .append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x))
+          .selectAll("text")
+          .style("text-anchor", "end")
+          .attr("dx", "-.8em")
+          .attr("dy", ".15em")
+          .attr("transform", "rotate(-65)")
+          .attr("fill", (d, i) => rainbowColorScale(i, data.length));
+
+        // Add Y axis
+        const y = d3.scaleLinear().domain([0, d3.max(data, (d) => d.count)]).range([height, 0]);
+
+        svg.append("g").call(d3.axisLeft(y));
+
+        // Bars
+        svg
+          .selectAll(".bar")
+          .data(data)
+          .enter()
+          .append("rect")
+          .attr("class", "bar")
+          .attr("x", (d) => x(d.word))
+          .attr("width", x.bandwidth())
+          .attr("y", (d) => y(d.count))
+          .attr("height", (d) => height - y(d.count));
+      }
+
+      // Function to update domain list
+      function updateDomainList(containerId, wordCounts) {
+        const domainListContainer = d3.select(containerId).select("ul");
+        domainListContainer.selectAll("li").remove(); // Clear existing list items
+        wordCounts.forEach((d) => {
+          domainListContainer.append("li").text(`${d.word}: ${d.count}`);
+        });
+      }
+
+      // Function to process CSV data and update chart
+      function processDataAndUpdateChart(chartId, data, queryOptionsId, selectedQuery) {
+        const filteredData = data.filter((d) => d.Query === selectedQuery);
+        const titleWords = filteredData.flatMap((d) => d.Title.split(/\s+/));
+        const wordCounts = d3.rollup(
+          titleWords,
+          (v) => v.length,
+          (d) => d
+        );
+        const wordCountsArray = Array.from(wordCounts, ([word, count]) => ({ word, count }));
+
+        createChart(chartId, wordCountsArray);
+        updateDomainList(chartId, wordCountsArray);
+      }
+
+      // Function to populate query options
+      function populateQueryOptions(queryOptionsId, data) {
+        const queryOptions = d3.select(queryOptionsId);
+        const queries = Array.from(new Set(data.map((d) => d.Query)));
+        queryOptions.selectAll("option").remove(); // Clear existing options
+        queries.forEach((query) => {
+          queryOptions.append("option").text(query).attr("value", query);
+        });
+      }
+
+      // Function to handle query selection change
+      function onQueryChange(chartId, data, queryOptionsId) {
+        const selectedQuery = d3.select(queryOptionsId).property("value");
+        d3.select(chartId).select("svg").remove(); // Clear existing chart
+        processDataAndUpdateChart(chartId, data, queryOptionsId, selectedQuery);
+      }
+
+      // Load CSV files and update charts
+      Promise.all([
+        d3.csv("js/8.3.2024all_queries_domains_with_ranks_and_snapshots.csv"),
+        d3.csv("js/24.6.2024.all_queries_domains_with_ranks_and_snapshots.csv"),
+        d3.csv("js/25.4.2024all_queries_domains_with_ranks_and_snapshots.csv"),
+      ]).then((data) => {
+        const [data1, data2, data3] = data;
+
+        // Populate query options
+        populateQueryOptions("#queryOptions1", data1);
+        populateQueryOptions("#queryOptions2", data2);
+        populateQueryOptions("#queryOptions3", data3);
+
+        // Initial chart rendering
+        const initialQuery1 = d3.select("#queryOptions1").property("value");
+        processDataAndUpdateChart("#chart1", data1, "#queryOptions1", initialQuery1);
+
+        const initialQuery2 = d3.select("#queryOptions2").property("value");
+        processDataAndUpdateChart("#chart2", data2, "#queryOptions2", initialQuery2);
+
+        const initialQuery3 = d3.select("#queryOptions3").property("value");
+        processDataAndUpdateChart("#chart3", data3, "#queryOptions3", initialQuery3);
+
+        // Add event listeners for query selection changes
+        d3.select("#queryOptions1").on("change", () =>
+          onQueryChange("#chart1", data1, "#queryOptions1")
+        );
+        d3.select("#queryOptions2").on("change", () =>
+          onQueryChange("#chart2", data2, "#queryOptions2")
+        );
+        d3.select("#queryOptions3").on("change", () =>
+          onQueryChange("#chart3", data3, "#queryOptions3")
+        );
+      });
+    </script>
+  </body>
+</html>
