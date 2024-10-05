@@ -308,7 +308,7 @@ layout: default2
 
 
 <script>
-    scatter_plot("js/Processed_CSV.csv", "#ID01", "num_h2");
+    scatter_plot("js/24.6.2024.all_queries_domains_with_ranks_and_snapshots.csv", "#ID01", "h2 Word Count");
     scatter_plot("js/24.6.2024.all_queries_domains_with_ranks_and_snapshots.csv", "#ID02", "h3 Word Count");
     scatter_plot("js/24.6.2024.all_queries_domains_with_ranks_and_snapshots.csv", "#ID03", "h4 Word Count");
     scatter_plot("js/24.6.2024.all_queries_domains_with_ranks_and_snapshots.csv", "#ID04", "Image Count");
